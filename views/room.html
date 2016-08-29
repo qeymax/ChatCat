@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>ChatCat</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
+        <link href="../public/css/room.css" rel="stylesheet">
+        
+    </head>
+    <body>
+        <div class="ui text container raised segment">
+            <div class="ui header huge">ChatCat</div>
+            <div class="ui divider"></div>
+            <img class="ui avatar image" src="../public/images/default-profile.png" alt="">
+            <span>Username</span>
+            <div class="ui right floated horizontal list">
+                <a class="item" href="#">Chat Rooms</a>
+                <a class="item" href="#">Logout</a>
+            </div>
+            <br>
+            <br>
+            <div class="roomName">
+                <h4 class="ui header center aligned">RoomName</h4>
+            </div>
+            <br>  
+            <div class="ui grid">
+                <div class="eleven wide column">
+                    <div class="ui segment conversation">
+                        <div class="ui top aligned mini list">
+                            <div class="item">
+                                <img class="ui avatar image" src="../public/images/default-profile.png">
+                                <div class="content">
+                                    <div class="ui segment inverted blue message">
+                                        message
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="five wide column">
+                    <div class="ui segment currentUsers">
+                        <div class="ui middle aligned small selection list">
+                            <div class="item">
+                                <img class="ui avatar image" src="../public/images/default-profile.png">
+                                <div class="content">
+                                    <div class="header">Helen</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <br>
+            <div class="ui input fluid">
+                <input placeholder="message"/>
+            </div>
+        </div>
+
+
+        <script   src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js"></script>
+    </body>
+</html>

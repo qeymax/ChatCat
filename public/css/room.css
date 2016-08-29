@@ -1,0 +1,21 @@
+body{
+    padding-top: 50vh;
+}
+.container{
+    transform: translateY(-50%);
+}
+.grid{
+    height: 380px;
+}
+.conversation, .currentUsers{
+    height: 100%;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+input{
+    height: 50px;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}

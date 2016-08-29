@@ -1,0 +1,16 @@
+.container{
+    width : 500px !important;
+    transform: translateY(-50%);
+}
+.rooms{
+    height: 250px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+body{
+   padding-top: 50vh;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
