@@ -43,13 +43,13 @@ module.exports = function (io , rooms) {
             var res = [];
              // the default namespace is "/"
             
-            // io.of(namespace).in(roomId).clients(function(error, clients){
-            //     if (error) throw error;
-            //     console.log(clients);
-            //     for (var id in clients){
-            //         res.push(ns.connected[id]);
-            //     }
-            // });
+            io.of(namespace).in(roomId).clients(function(error, clients){
+                if (error) throw error;
+                console.log(clients);
+                for (var id in clients){
+                    res.push(ns.connected[id]);
+                }
+            });
 
             // if (ns) {
             //     for (var id in ns.connected) {
