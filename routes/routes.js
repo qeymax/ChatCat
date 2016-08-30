@@ -23,7 +23,10 @@ router.get("/chatrooms",isLoggedIn, function (req, res, next) {
 
 router.get("/room/:id", isLoggedIn, function (req, res, next) {
     var room_name = findTitle(req.params.id);
-    res.render("room" , {user: req.user , room_number: req.params.id ,room_name:room_name, config:config})
+    if (!room_name) {
+        res.render("chatrooms", { title: "ChatCat"  , user: req.user});
+    }
+    res.render("room", { user: req.user, room_number: req.params.id, room_name: room_name, config: config });
 });
 
 function findTitle(room_number) {
