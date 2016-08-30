@@ -39,18 +39,27 @@
                             userName : userName,
                             message: $(this).val()
                         });
-                        updateMessageFeed(userPic , $(this).val() , userName);
+                        updateMessageFeed(userPic , $(this).val() , userName , true);
                         $(this).val("");
                     }
 
                 })
 
 
-                function updateMessageFeed(userPic , message , userName){
+                function updateMessageFeed(userPic , message , userName , isUser){
                     var str  = '<div class="item">';
-                        str += '<img class="ui avatar image" src="'+userPic+'" >';
-                        str += '<div class="content">';
-                        str += '<div class="ui segment inverted blue message" data-tooltip="'+ userName +'" data-position="right center">'
+                        
+                        
+                        if(isUser){
+                            str += '<img class="ui avatar image right floated" src="'+userPic+'" >';
+                            str += '<div class="right floated content">';
+                            str += '<div class="ui segment inverted blue message" data-tooltip="'+ userName +'" data-position="left center">';
+                        }else{
+                            str += '<img class="ui avatar image" src="'+userPic+'" >';
+                            str += '<div class="content">';
+                            str += '<div class="ui segment inverted message" data-tooltip="'+ userName +'" data-position="right center">';
+                        }
+                        
                         str += message;
                         str += '</div></div></div>';            
                                 
@@ -61,6 +70,7 @@
 
                 message.on("updateuserslist" , function(data){
                     console.log("here");
+                    console.log(data);
                     var userlist = JSON.parse(data);
                     $("#users").html("");
                     for(var i =0; i< userlist.length; i++){
@@ -74,7 +84,7 @@
 
                 });
                 var int = setInterval(function(){
-                    message.emit("updatelist" , {rommNumber : roomNumber});
+                    message.emit("updatelist" , {roomNumber : roomNumber});
                 } , 8000);
             });
         </script>

@@ -16,20 +16,21 @@ module.exports = function (io , rooms) {
         console.log("connected 2");
         socket.on("joinroom", function (data) {
             for (var i = 0, len = rooms.length; i < len; i++) {
-                if (rooms[i].id === data.roomNumber) {
-                    rooms[i].clients.push({ userName = data.userName, userPic = data.userPic });
+                if (rooms[i].room_number === data.roomNumber) {
+                    rooms[i].clients.push({ userName : data.userName, userPic : data.userPic });
                 }
             }
+            socket.userPic = data.userPic;
             socket.join(data.roomNumber);
             updateUserList(data.roomNumber, true);
         });
-         socket.on('end', function(data) {
-            for (var i = 0, len = rooms.length; i < len; i++) {
-                if (rooms[i].id === data.roomName) {
-                    for (var j = 0; j < romms[i].length; i++) {
-                        if (rooms[i][j].userName === data.userName) {
-                            rooms[i].splice(rooms[i][j], 1);
-                        }
+        socket.on('disconnect', function () {
+            console.log("disconnect");
+            for (var i = 0; i<rooms.length; i++) {
+                for (var j = 0; j < rooms[i].clients.length; j++) {
+                    if (rooms[i].clients[j].userPic === socket.userPic) {
+                        rooms[i].clients.splice(rooms[i].clients[j], 1);
+                        console.log(rooms[i].clients);
                     }
                 }
             }
@@ -41,9 +42,10 @@ module.exports = function (io , rooms) {
         });
 
         function updateUserList(room, updateAll) {
+            console.log(room);
             var userList = [];
             for (var i = 0, len = rooms.length; i < len; i++) {
-                if (rooms[i].id === room) {
+                if (rooms[i].room_number === room) {
                     userList = rooms[i].clients;
                 }
             }
@@ -51,7 +53,8 @@ module.exports = function (io , rooms) {
             
             console.log("reached here");
             console.log(userList);
-            socket.to(room).emit("updateuserslist", JSON.stringify(userList));
+            console.log(rooms);
+            socket.emit("updateuserslist", JSON.stringify(userList));
 
             if (updateAll) {
                 socket.broadcast.to(room).emit("updateuserslist", JSON.stringify(userList));
@@ -60,7 +63,7 @@ module.exports = function (io , rooms) {
         
 
         socket.on("updatelist", function (data) {
-            updateUserList(data.roomNumbe);
+            updateUserList(data.roomNumber);
         });
     });
 
