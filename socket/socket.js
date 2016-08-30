@@ -33,7 +33,7 @@ module.exports = function (io , rooms) {
             }
             console.log("reached here");
             console.log(userList);
-            socket.emit("updateuserslist", JSON.stringify(userList));
+            io.to(room).emit("updateuserslist", JSON.stringify(userList));
 
             if (updateAll) {
                 socket.broadcast.to(room).emit("updateuserslist", JSON.stringify(userList));
@@ -47,7 +47,7 @@ module.exports = function (io , rooms) {
                 for (var id in ns.connected) {
                     if(roomId) {
                         var index = ns.connected[id].rooms[roomId];
-                        if(index) {
+                        if(index !== -1) {
                             res.push(ns.connected[id]);
                         }
                     } else {
