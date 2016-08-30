@@ -44,7 +44,7 @@ module.exports = function (io , rooms) {
              // the default namespace is "/"
             
             var clients_in_the_room = io.sockets.adapter.rooms[roomId]; 
-            cosole.log(clients_in_the_room);
+            console.log(clients_in_the_room);
                 for (var clientId in clients_in_the_room ) {
                     console.log('client: %s', clientId); //Seeing is believing 
                     var client_socket = io.sockets.connected[clientId];//Do whatever you want with this
