@@ -10,7 +10,7 @@
         <script src="../socket.io/socket.io.js"></script>
         <script>
             $(function(){
-                var host = "https://mychatcatapp.herokuapps.com";
+                var host = "https://mychatcatapp.herokuapp.com";
                 var socket = io.connect(host + "/roomlist");
 
                 socket.on("connect" , function(){
