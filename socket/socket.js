@@ -33,7 +33,7 @@ module.exports = function (io , rooms) {
             }
             console.log("reached here");
             console.log(userList);
-            io.to(room).emit("updateuserslist", JSON.stringify(userList));
+            socket.to(room).emit("updateuserslist", JSON.stringify(userList));
 
             if (updateAll) {
                 socket.broadcast.to(room).emit("updateuserslist", JSON.stringify(userList));
