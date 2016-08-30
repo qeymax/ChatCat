@@ -47,8 +47,8 @@ module.exports = function (io , rooms) {
                 for (var id in ns.connected) {
                     if(roomId) {
                         var index = ns.connected[id].rooms[roomId];
-                        if(index !== -1) {
-                            res.push(ns.connected[id].rooms[roomId]);
+                        if(index) {
+                            res.push(ns.connected[id]);
                         }
                     } else {
                         res.push(ns.connected[id]);
