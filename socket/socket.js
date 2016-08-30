@@ -40,10 +40,10 @@ module.exports = function (io , rooms) {
             }
         }
         function findClientsSocket(roomId, namespace) {
-            var res = []
-            , ns = io.of(namespace ||"/");    // the default namespace is "/"
+            var res = [];
+             // the default namespace is "/"
             
-            io.of(ns).in(roomId).clients(function(error, clients){
+            io.of(namespace).in(roomId).clients(function(error, clients){
                 if (error) throw error;
                 console.log(clients);
                 for (var id in clients){
