@@ -42,19 +42,26 @@ module.exports = function (io , rooms) {
         function findClientsSocket(roomId, namespace) {
             var res = []
             , ns = io.of(namespace ||"/");    // the default namespace is "/"
-
-            if (ns) {
-                for (var id in ns.connected) {
-                    if(roomId) {
-                        var index = ns.connected[id].rooms[roomId];
-                        if(index !== -1) {
-                            res.push(ns.connected[id]);
-                        }
-                    } else {
-                        res.push(ns.connected[id]);
-                    }
+            
+            io.of(ns).in(roomId).clients(function(error, clients){
+                if (error) throw error;
+                for (var id in clients){
+                    res.push(ns.connected[id]);
                 }
-            }
+            });
+
+            // if (ns) {
+            //     for (var id in ns.connected) {
+            //         if(roomId) {
+            //             var index = ns.connected[id].rooms[roomId];
+            //             if(index !== -1) {
+            //                 res.push(ns.connected[id]);
+            //             }
+            //         } else {
+            //             res.push(ns.connected[id]);
+            //         }
+            //     }
+            // }
             return res;
         }
 
