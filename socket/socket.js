@@ -46,9 +46,9 @@ module.exports = function (io , rooms) {
             io.of(namespace).in(roomId).clients(function(error, clients){
                 if (error) throw error;
                 console.log(clients);
-                for (var id in clients){
-                    res.push(ns.connected[id]);
-                }
+                // for (var id in clients){
+                //     res.push(ns.connected[id]);
+                // }
             });
 
             // if (ns) {
