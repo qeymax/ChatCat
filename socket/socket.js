@@ -4,6 +4,7 @@ module.exports = function (io , rooms) {
         socket.emit("roomupdate", JSON.stringify(rooms));
         
         socket.on("newroom", function (data) {
+            data.clients = [];
             rooms.push(data);
             socket.broadcast.emit("roomupdate", JSON.stringify(rooms));
             socket.emit("roomupdate", JSON.stringify(rooms));
@@ -14,10 +15,24 @@ module.exports = function (io , rooms) {
     var message = io.of("/messages").on("connection", function (socket) {
         console.log("connected 2");
         socket.on("joinroom", function (data) {
-            socket.userName = data.userName;
-            socket.userPic = data.userPic;
+            for (var i = 0, len = rooms.length; i < len; i++) {
+                if (rooms[i].id === data.roomNumber) {
+                    rooms[i].clients.push({ userName = data.userName, userPic = data.userPic });
+                }
+            }
             socket.join(data.roomNumber);
             updateUserList(data.roomNumber, true);
+        });
+         socket.on('end', function(data) {
+            for (var i = 0, len = rooms.length; i < len; i++) {
+                if (rooms[i].id === data.roomName) {
+                    for (var j = 0; j < romms[i].length; i++) {
+                        if (rooms[i][j].userName === data.userName) {
+                            rooms[i].splice(rooms[i][j], 1);
+                        }
+                    }
+                }
+            }
         });
 
         socket.on("newmessage", function (data) {
@@ -25,12 +40,15 @@ module.exports = function (io , rooms) {
             socket.broadcast.to(data.roomNumber).emit("messagefeed", JSON.stringify(data));
         });
 
-        function updateUserList(room , updateAll) {
-            var getUsers = findClientsSocket(room, "/messages");
+        function updateUserList(room, updateAll) {
             var userList = [];
-            for (var i = 0; i < getUsers.length; i++) {
-                userList.push({ userName: getUsers[i].userName, userPic: getUsers[i].userPic });
+            for (var i = 0, len = rooms.length; i < len; i++) {
+                if (rooms[i].id === room) {
+                    userList = rooms[i].clients;
+                }
             }
+            
+            
             console.log("reached here");
             console.log(userList);
             socket.to(room).emit("updateuserslist", JSON.stringify(userList));
@@ -39,32 +57,7 @@ module.exports = function (io , rooms) {
                 socket.broadcast.to(room).emit("updateuserslist", JSON.stringify(userList));
             }
         }
-        function findClientsSocket(roomId, namespace) {
-            var res = [];
-             // the default namespace is "/"
-            
-            var clients_in_the_room = io.sockets.adapter.rooms[roomId]; 
-            console.log(clients_in_the_room);
-                for (var clientId in clients_in_the_room ) {
-                    console.log('client: %s', clientId); //Seeing is believing 
-                    var client_socket = io.sockets.connected[clientId];//Do whatever you want with this
-                    res.push(client_socket); 
-                }
-
-            // if (ns) {
-            //     for (var id in ns.connected) {
-            //         if(roomId) {
-            //             var index = ns.connected[id].rooms[roomId];
-            //             if(index !== -1) {
-            //                 res.push(ns.connected[id]);
-            //             }
-            //         } else {
-            //             res.push(ns.connected[id]);
-            //         }
-            //     }
-            // }
-            return res;
-        }
+        
 
         socket.on("updatelist", function (data) {
             updateUserList(data.roomNumbe);

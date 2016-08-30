@@ -21,6 +21,10 @@
                     message.emit("joinroom" , {roomNumber:roomNumber ,userName: userName, userPic:userPic });
                 });
 
+                message.on("disconnect" , function(){
+                    message.emit('end' , {roomNumber:roomNumber ,userName: userName, userPic:userPic });
+                });
+
                 message.on("messagefeed" , function(data){
                     console.log("message feed");
                     var msg = JSON.parse(data);
