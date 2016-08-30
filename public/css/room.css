@@ -5,11 +5,8 @@ body{
 .container{
     transform: translateY(-50%);
 }
-.grid{
-    height: 380px;
-}
 .conversation, .currentUsers{
-    height: 100%;
+    height: 380px;
     overflow: scroll;
     overflow-x: hidden;
 }
