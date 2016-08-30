@@ -43,13 +43,12 @@ module.exports = function (io , rooms) {
             var res = [];
              // the default namespace is "/"
             
-            io.of(namespace).in(roomId).clients(function(error, clients){
-                if (error) throw error;
-                console.log(clients);
-                // for (var id in clients){
-                //     res.push(ns.connected[id]);
-                // }
-            });
+            var clients_in_the_room = io.sockets.adapter.rooms[roomId]; 
+                for (var clientId in clients_in_the_room ) {
+                    console.log('client: %s', clientId); //Seeing is believing 
+                    var client_socket = io.sockets.connected[clientId];//Do whatever you want with this
+                    res.push(client_socket); 
+                }
 
             // if (ns) {
             //     for (var id in ns.connected) {
