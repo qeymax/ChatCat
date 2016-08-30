@@ -14,6 +14,7 @@
                 var roomNumber = {{room_number}};
                 var userName = "{{user.fullname}}";
                 var userPic = "{{user.profilePic}}";
+                var audio = new Audio('../sounds/flash-3.mp3');
 
                 message.on("connect",function(){
                     console.log("connected room");
@@ -50,6 +51,7 @@
                         str += '</div></div></div>';            
                                 
                     $("#messages").append(str);
+                    audio.play();
                     $('.conversation').animate({ scrollTop: $('.conversation').prop("scrollHeight")});       
                 }
 
@@ -57,8 +59,6 @@
                     console.log("here");
                     var userlist = JSON.parse(data);
                     $("#users").html("");
-                    console.log(data);
-                    console.log(userlist);
                     for(var i =0; i< userlist.length; i++){
                         var str =  '<div class="item">';
                             str += '<img class="ui avatar image" src="'+userlist[i].userPic+'">';
