@@ -5,47 +5,63 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
-        <link href="../public/css/chatrooms.css" rel="stylesheet">
-        
+        <link href="../css/chatrooms.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+        <script src="../socket.io/socket.io.js"></script>
+        <script>
+            $(function(){
+                var host = "http://mychatcatapp.herokuapps.com";
+                var socket = io.connect(host + "/roomlist");
+
+                socket.on("connect" , function(){
+                    console.log("connected");
+                });
+
+                socket.on("roomupdate", function(data){
+                    var data = JSON.parse(data);
+                    $("#roomlist").html("");
+                    for(var i=0;i< data.length;i++){
+                        var str = '<a href="/room/'+ data[i].room_number + '" class="item"><div class="header">'+data[i].room_name+'</div></a>';
+                        $("#roomlist").prepend(str);
+                        
+                    }
+                });
+
+                $("#create").on("click" , function(){
+                    var room_name = $("#newRoom").val();
+                    if(room_name != ""){
+                        var room_number = parseInt(Math.random() *10000);
+                        socket.emit("newroom" , {room_name: room_name , room_number: room_number});
+                        $("#newRoom").val("");
+                    }
+                });
+                
+            });
+        </script>
     </head>
     <body>
         <div class="ui text container raised segment">
             <div class="ui header huge">ChatCat</div>
             <div class="ui divider"></div>
-            <img class="ui avatar image" src="../public/images/default-profile.png" alt="">
-            <span>Username</span>
+            <img class="ui avatar image" src="{{user.profilePic}}" alt="">
+            <span>{{user.fullname}}</span>
             <div class="ui right floated horizontal list">
-                <a class="item" href="#">Logout</a>
+                <a class="item" href="/logout">Logout</a>
             </div>
             <br>
             <br>
             <div class="ui action input fluid">
-                <input type="text" placeholder="Rome Name">
-                <button class="ui button">Ceate Room</button>
+                <input id="newRoom" type="text" placeholder="Room Name">
+                <button id="create" class="ui button">Ceate Room</button>
             </div>
             <div class="ui segment rooms">
-                <div class="ui middle aligned large selection list">
-                    <div class="item">
-                        <div class="header">Helen</div>
-                    </div>
-                    <div class="item">
-                        <div class="header">Christian</div> 
-                    </div>
-                    <div class="item">
-                        <div class="header">Daniel</div>
-                    </div>
-                    <div class="item">
-                        <div class="header">Daniel</div>
-                    </div>
-                    <div class="item">
-                        <div class="header">Daniel</div>
-                    </div>
+                <div id="roomlist" class="ui middle aligned large selection list">
+                    
                 </div>
             </div>
         </div>
 
 
-        <script   src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js"></script>
     </body>
 </html>

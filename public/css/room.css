@@ -1,5 +1,6 @@
 body{
     padding-top: 50vh;
+    background-color: #28AFB0;
 }
 .container{
     transform: translateY(-50%);

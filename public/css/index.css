@@ -1,4 +1,8 @@
 .container{
-    margin-top : 250px;
     width : 500px !important;
+    transform: translateY(-50%);
+}
+body{
+    background-color: #28AFB0;
+    padding-top: 50vh;
 }
