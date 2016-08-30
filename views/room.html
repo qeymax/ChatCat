@@ -10,7 +10,7 @@
         <script src="/socket.io/socket.io.js"></script>
         <script>
             $(function(){
-                var message = io.connect("http://mychatcatapp.herokuapps.com/messages");
+                var message = io.connect("https://mychatcatapp.herokuapps.com/messages");
                 var roomNumber = {{room_number}};
                 var userName = "{{user.fullname}}";
                 var userPic = "{{user.profilePic}}";
